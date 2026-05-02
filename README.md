@@ -2,7 +2,7 @@
 
 **LinkedIn-powered shameware for bad browsing decisions.**
 
-Church Bench is a hackathon Chrome extension that turns a blocked demo page into a full-screen public repentance ritual: a screaming grandma popup video, a 90-second apology timer, escalating word-count requirements, and a LinkedIn guilt-post draft if the user refuses to repent.
+Church Bench is a silly hackathon Chrome extension that turns a blocked demo page into a full-screen public repentance ritual: a screaming grandma popup video, a 90-second apology timer, escalating word-count requirements, and a LinkedIn guilt-post draft if the user refuses to repent.
 
 It does **not** post automatically. It only opens LinkedIn with a prefilled draft/share URL, so the demo stays funny instead of becoming malware.
 
@@ -74,7 +74,3 @@ git diff --check
 Then reload the unpacked extension and manually test `goose-test.html` from the repo root.
 
 Confirm that the timer, word count, paste penalty, duplicate-word penalty, forgiveness screen, grandma media, and LinkedIn timeout redirect all still work.
-
-## Hackathon pitch
-
-Most blockers are boring. Church Bench weaponizes social accountability: it does not just block the page, it makes a grandma pop up, forces a repentance essay, and threatens your LinkedIn network with radical professional transparency.
