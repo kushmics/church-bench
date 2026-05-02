@@ -15,6 +15,7 @@
   document.body.innerHTML = "";
 
   const grandmaVideoUrl = chrome.runtime.getURL("assets/grandmapopup.mp4");
+  const grandmaPosterUrl = chrome.runtime.getURL("assets/grandmapopup-poster.jpg");
 
   const overlay = document.createElement("main");
   overlay.id = "church-bench-overlay";
@@ -23,7 +24,7 @@
   overlay.innerHTML = `
     <section class="cb-card">
       <div class="cb-badge">⛪ LIVE MORAL INCIDENT REPORT</div>
-      <video class="cb-grandma-video" autoplay loop muted playsinline aria-label="Grandma popup warning">
+      <video class="cb-grandma-video" autoplay loop muted playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
         <source src="${grandmaVideoUrl}" type="video/mp4">
       </video>
       <h1>Young person, your LinkedIn network is watching.</h1>
@@ -39,7 +40,7 @@
 
       <div class="cb-progress-row">
         <span id="church-bench-word-count">Words: 0 / ${REQUIRED_WORDS}</span>
-        <span id="church-bench-warning">No copy-paste apologies. Auntie can tell.</span>
+        <span id="church-bench-warning">No copy-paste apologies. Grandma can tell.</span>
       </div>
     </section>
   `;
@@ -49,6 +50,19 @@
   const apologyBox = document.getElementById("church-bench-apology");
   const wordCountDisplay = document.getElementById("church-bench-word-count");
   const warningDisplay = document.getElementById("church-bench-warning");
+  const grandmaVideo = overlay.querySelector(".cb-grandma-video");
+
+  if (grandmaVideo) {
+    grandmaVideo.muted = true;
+    grandmaVideo.load();
+    grandmaVideo.play().catch(() => {
+      const fallbackImage = document.createElement("img");
+      fallbackImage.className = "cb-grandma-video";
+      fallbackImage.src = grandmaPosterUrl;
+      fallbackImage.alt = "Grandma popup warning";
+      grandmaVideo.replaceWith(fallbackImage);
+    });
+  }
 
   apologyBox.focus();
 
@@ -109,7 +123,7 @@
       <main id="church-bench-overlay" class="cb-forgiven">
         <section class="cb-card">
           <div class="cb-face" aria-hidden="true">🙏</div>
-          <h1>Auntie is satisfied.</h1>
+          <h1>Grandma is satisfied.</h1>
           <p class="cb-subtitle">You may return to society. Close this tab and make better choices.</p>
         </section>
       </main>
