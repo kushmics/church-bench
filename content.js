@@ -14,6 +14,8 @@
   document.documentElement.classList.add("church-bench-locked");
   document.body.innerHTML = "";
 
+  const grandmaVideoUrl = chrome.runtime.getURL("assets/grandmapopup.mp4");
+
   const overlay = document.createElement("main");
   overlay.id = "church-bench-overlay";
   overlay.setAttribute("role", "dialog");
@@ -21,7 +23,9 @@
   overlay.innerHTML = `
     <section class="cb-card">
       <div class="cb-badge">⛪ LIVE MORAL INCIDENT REPORT</div>
-      <div class="cb-face" aria-hidden="true">🧓🏽</div>
+      <video class="cb-grandma-video" autoplay loop muted playsinline aria-label="Grandma popup warning">
+        <source src="${grandmaVideoUrl}" type="video/mp4">
+      </video>
       <h1>Young person, your LinkedIn network is watching.</h1>
       <p class="cb-subtitle">You have entered a spiritually suspicious URL. Repent with a sincere apology before the timer ends.</p>
 
