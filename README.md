@@ -15,7 +15,7 @@ It does **not** post automatically. It only opens LinkedIn with a prefilled draf
    - `https://banana.com`
    - `https://cornhub.website`
    - `https://cornhub.com`
-   - local test page: `file:///Users/ethankok/Projects/church-bench/goose-test.html`
+   - local test page: `~/church-bench/goose-test.html`
 3. Church Bench replaces the page with a full-screen grandma accountability overlay.
 4. Grandma appears in a portrait video frame. The video autoplays muted where Chrome allows it; the separate grandma audio starts immediately if allowed, or on the first user gesture.
 5. The user has 90 seconds to type the required apology.
