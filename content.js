@@ -30,7 +30,7 @@ async function init() {
   overlay.setAttribute("aria-modal", "true");
   overlay.innerHTML = `
     <section class="cb-card">
-      <div class="cb-badge">⛪ LIVE MORAL INCIDENT REPORT</div>
+      <div class="cb-badge">Live moral incident report</div>
       <div class="cb-layout">
         <div class="cb-grandma-frame">
           <video class="cb-grandma-video" autoplay loop muted playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
@@ -365,7 +365,7 @@ async function init() {
     document.body.innerHTML = `
       <main id="church-bench-overlay" class="cb-forgiven">
         <section class="cb-card cb-forgiven-card">
-          <div class="cb-confetti" aria-hidden="true">🎉 ✨ 🙏 ✨ 🎉</div>
+          <div class="cb-confetti" aria-hidden="true">Forgiveness granted</div>
           <div class="cb-face" aria-hidden="true">✅</div>
           <div class="cb-badge cb-forgiven-badge">GRANDMA HAS LEFT THE CALL</div>
           <h1>Apology accepted.</h1>
