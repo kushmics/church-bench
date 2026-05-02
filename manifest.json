@@ -2,10 +2,13 @@
   "manifest_version": 3,
   "name": "Church Bench",
   "version": "1.0.0",
-  "permissions": ["tabs", "scripting"],
+  "permissions": ["tabs", "scripting", "storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Church Bench"
   },
   "content_scripts": [
     {
@@ -20,6 +23,12 @@
       "js": ["content.js"],
       "css": ["styles.css"],
       "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/grandmapopup.mp4", "assets/grandmapopup-poster.jpg", "assets/grandmapopup-audio.m4a"],
+      "matches": ["<all_urls>"]
     }
   ]
 }
