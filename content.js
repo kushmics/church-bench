@@ -3,7 +3,7 @@ function init() {
   window.__churchBenchActive = true;
 
   const REQUIRED_WORDS = 50;
-  const TOTAL_SECONDS = 120; // Changed to 120 for 2 minutes
+  const TOTAL_SECONDS = 90; // 90-second repentance timer
   const DUPLICATE_WORD_PENALTY_SECONDS = 5;
 
   let secondsLeft = TOTAL_SECONDS;
@@ -38,7 +38,7 @@ function init() {
 
           <div class="cb-timer-wrap">
             <span class="cb-label">Time before corporate transparency post</span>
-            <strong id="church-bench-timer">02:00</strong>
+            <strong id="church-bench-timer">01:30</strong>
           </div>
 
           <label for="church-bench-apology">Essay of repentance</label>
