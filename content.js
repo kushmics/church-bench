@@ -16,6 +16,7 @@
 
   const grandmaVideoUrl = chrome.runtime.getURL("assets/grandmapopup.mp4");
   const grandmaPosterUrl = chrome.runtime.getURL("assets/grandmapopup-poster.jpg");
+  const grandmaAudioUrl = chrome.runtime.getURL("assets/grandmapopup-audio.m4a");
 
   const overlay = document.createElement("main");
   overlay.id = "church-bench-overlay";
@@ -26,7 +27,7 @@
       <div class="cb-badge">⛪ LIVE MORAL INCIDENT REPORT</div>
       <div class="cb-layout">
         <div class="cb-grandma-frame">
-          <video class="cb-grandma-video" autoplay loop playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
+          <video class="cb-grandma-video" autoplay loop muted playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
             <source src="${grandmaVideoUrl}" type="video/mp4">
           </video>
         </div>
@@ -58,51 +59,89 @@
   const wordCountDisplay = document.getElementById("church-bench-word-count");
   const warningDisplay = document.getElementById("church-bench-warning");
   const grandmaVideo = overlay.querySelector(".cb-grandma-video");
+  const grandmaAudio = new Audio(grandmaAudioUrl);
   let grandmaAudioContext;
+  let grandmaAudioStarted = false;
+
+  grandmaAudio.loop = true;
+  grandmaAudio.volume = 1;
 
   function boostGrandmaAudio() {
-    if (!grandmaVideo || grandmaAudioContext) return;
+    if (grandmaAudioContext) return;
 
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
 
     grandmaAudioContext = new AudioContextClass();
-    const source = grandmaAudioContext.createMediaElementSource(grandmaVideo);
+    const source = grandmaAudioContext.createMediaElementSource(grandmaAudio);
     const gain = grandmaAudioContext.createGain();
     gain.gain.value = 4;
     source.connect(gain);
     gain.connect(grandmaAudioContext.destination);
   }
 
-  function playGrandmaAtMaxVolume() {
-    if (!grandmaVideo) return Promise.resolve();
+  function playGrandmaVideoMuted() {
+    if (!grandmaVideo) return;
 
-    grandmaVideo.muted = false;
-    grandmaVideo.volume = 1;
-    boostGrandmaAudio();
-
-    if (grandmaAudioContext?.state === "suspended") {
-      return grandmaAudioContext.resume().then(() => grandmaVideo.play());
-    }
-
-    return grandmaVideo.play();
-  }
-
-  if (grandmaVideo) {
+    grandmaVideo.muted = true;
+    grandmaVideo.volume = 0;
     grandmaVideo.load();
-    playGrandmaAtMaxVolume().catch(() => {
-      const startSoundButton = document.createElement("button");
-      startSoundButton.className = "cb-sound-button";
-      startSoundButton.type = "button";
-      startSoundButton.textContent = "🔊 ENABLE GRANDMA MAX VOLUME";
-      startSoundButton.addEventListener("click", () => {
-        playGrandmaAtMaxVolume().then(() => startSoundButton.remove()).catch(() => {
-          startSoundButton.textContent = "🔊 CLICK AGAIN, GRANDMA IS BUFFERING";
-        });
-      });
-      overlay.querySelector(".cb-grandma-frame")?.appendChild(startSoundButton);
+    grandmaVideo.play().catch(() => {
+      showWarning("Chrome blocked video autoplay. Click the grandma video to start it.");
     });
   }
+
+  function startGrandmaAudio() {
+    if (grandmaAudioStarted) return Promise.resolve();
+
+    grandmaAudioStarted = true;
+    grandmaAudio.currentTime = grandmaVideo?.currentTime || 0;
+    boostGrandmaAudio();
+
+    const resumeAudio = grandmaAudioContext?.state === "suspended"
+      ? grandmaAudioContext.resume()
+      : Promise.resolve();
+
+    return resumeAudio.then(() => grandmaAudio.play()).catch((error) => {
+      grandmaAudioStarted = false;
+      throw error;
+    });
+  }
+
+  function addSoundButton() {
+    const frame = overlay.querySelector(".cb-grandma-frame");
+    if (!frame || frame.querySelector(".cb-sound-button")) return;
+
+    const startSoundButton = document.createElement("button");
+    startSoundButton.className = "cb-sound-button";
+    startSoundButton.type = "button";
+    startSoundButton.textContent = "🔊 CLICK FOR GRANDMA MAX VOLUME";
+    startSoundButton.addEventListener("click", () => {
+      startGrandmaAudio().then(() => startSoundButton.remove()).catch(() => {
+        startSoundButton.textContent = "🔊 CLICK AGAIN, CHROME BLOCKED GRANDMA";
+      });
+    });
+    frame.appendChild(startSoundButton);
+  }
+
+  function armAudioOnFirstGesture() {
+    const startFromGesture = () => {
+      startGrandmaAudio()
+        .then(() => overlay.querySelector(".cb-sound-button")?.remove())
+        .catch(addSoundButton);
+    };
+
+    ["pointerdown", "keydown", "input"].forEach((eventName) => {
+      overlay.addEventListener(eventName, startFromGesture, { once: true, capture: true });
+    });
+  }
+
+  playGrandmaVideoMuted();
+  grandmaVideo?.addEventListener("click", () => {
+    grandmaVideo.play().catch(() => {});
+  });
+  addSoundButton();
+  armAudioOnFirstGesture();
 
   apologyBox.focus();
 
