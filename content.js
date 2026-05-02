@@ -91,23 +91,121 @@
     window.setTimeout(() => warningDisplay.classList.remove("cb-flash"), 450);
   }
 
+  function getSiteContext(hostname) {
+    const host = hostname.toLowerCase();
+
+    if (/youtube|netflix|tiktok|twitch|disney|primevideo|crunchyroll/.test(host)) {
+      return {
+        sin: "entering a high-friction video-consumption funnel",
+        metric: "my Attention Retention Rate collapsed by 73%",
+        remedy: "closing the tab, drinking water, and returning to stakeholder-aligned work",
+        hashtag: "#AttentionEconomy",
+      };
+    }
+
+    if (/reddit|twitter|x\.com|instagram|facebook|threads|9gag/.test(host)) {
+      return {
+        sin: "attempting to crowdsource dopamine from the public timeline",
+        metric: "my Personal Brand Governance score entered free fall",
+        remedy: "rebuilding trust with my calendar, my task list, and the grandma community",
+        hashtag: "#DigitalDiscipline",
+      };
+    }
+
+    if (/shopee|amazon|lazada|taobao|shein|zalora|ebay/.test(host)) {
+      return {
+        sin: "initiating an unsanctioned procurement sprint",
+        metric: "my budget stewardship framework experienced a material breach",
+        remedy: "recommitting to fiscal maturity and removing novelty socks from cart",
+        hashtag: "#FinancialWellness",
+      };
+    }
+
+    if (/steampowered|epicgames|roblox|minecraft|chess|game|valorant|leagueoflegends/.test(host)) {
+      return {
+        sin: "pivoting from productive execution into recreational load testing",
+        metric: "my deliverables were hard-stuck in bronze",
+        remedy: "touching grass and reopening the assignment I was spiritually avoiding",
+        hashtag: "#ExecutionMindset",
+      };
+    }
+
+    if (/porn|xvideos|rule34|hentai|xxx|adult/.test(host)) {
+      return {
+        sin: "navigating into a deeply non-core solo research vertical",
+        metric: "my dopamine compliance pipeline failed its quarterly audit",
+        remedy: "logging off, seeking daylight, and restoring operational dignity",
+        hashtag: "#OperationalIntegrity",
+      };
+    }
+
+    return {
+      sin: "opening a spiritually suspicious non-roadmap tab",
+      metric: "my focus pipeline suffered an avoidable governance incident",
+      remedy: "returning to deep work before Grandma escalates to the board",
+      hashtag: "#GrowthMindset",
+    };
+  }
+
+  function pickTemplate(hostname) {
+    const score = [...hostname].reduce((total, char) => total + char.charCodeAt(0), 0);
+    return score % 3;
+  }
+
   function buildLinkedInDraft() {
     const currentHost = window.location.hostname || "a suspicious website";
-    return [
-      "I’m proud to share a small but meaningful personal milestone today.",
-      "",
-      `While navigating to ${currentHost}, I was challenged by Church Bench to pause, reflect, and recommit to the kind of digital discipline that compounds into long-term excellence.`,
-      "",
-      "In that moment, I realized productivity is not about never getting distracted. It is about building systems that lovingly but firmly redirect us back to our highest-leverage work.",
-      "",
-      "This experience reminded me that accountability is not a punishment — it is a privilege. Every interruption can become an invitation to grow, realign, and lead myself better.",
-      "",
-      "Grateful for the opportunity to turn a potential lapse in focus into a lesson in ownership, resilience, and intentional browsing.",
-      "",
-      "What systems are you building to keep your future self proud?",
-      "",
-      "#Productivity #Accountability #GrowthMindset #Leadership #PersonalDevelopment",
-    ].join("\n");
+    const context = getSiteContext(currentHost);
+    const templateIndex = pickTemplate(currentHost);
+
+    const templates = [
+      [
+        "🚨 A moment of radical professional transparency. 🚨",
+        "",
+        `Today, I failed to live my values and attempted ${context.sin} at ${currentHost}.`,
+        "",
+        `I could hide behind excuses like “just checking something quickly,” but real leaders own the data: ${context.metric}. This was not a tab. This was a culture problem, and unfortunately the culture was me.`,
+        "",
+        `I am using this incident as a growth opportunity by ${context.remedy}. Grandma appeared, the timer started, and I was reminded that accountability is just mentorship with louder consequences.`,
+        "",
+        "I am not proud of the click. I am proud of the ownership journey that followed the click.",
+        "",
+        "What systems are you building to stop your worst tabs from becoming your personal brand? 👇",
+        "",
+        `#Accountability #Leadership #PersonalGrowth ${context.hashtag} #GrandmaOps`,
+      ],
+      [
+        "I need to be vulnerable with my network today.",
+        "",
+        `I was one click away from betraying my roadmap when I visited ${currentHost} and began ${context.sin}.`,
+        "",
+        `The numbers are uncomfortable: ${context.metric}. The old me would have minimized it. The new me is choosing ownership, reflection, and a slightly terrifying grandma-led intervention layer.`,
+        "",
+        `This setback has taught me the importance of ${context.remedy}. Sometimes the strongest product is not an app. Sometimes it is a grandmother in fullscreen mode asking why you are like this.`,
+        "",
+        "Failure is feedback. Shame is a dashboard. LinkedIn is unfortunately the CRM for both.",
+        "",
+        "Agree? Curious how other teams operationalize guilt at scale.",
+        "",
+        `#FounderMindset #Resilience #DigitalWellbeing ${context.hashtag} #BuildInPublic`,
+      ],
+      [
+        "✅ Personal incident report: closed.",
+        "",
+        `Root cause: I navigated to ${currentHost} and started ${context.sin}.`,
+        "",
+        `Impact: ${context.metric}. Stakeholders affected: me, my future self, and one extremely disappointed grandma rendered at high z-index.`,
+        "",
+        `Corrective action: ${context.remedy}. Preventive action: respecting the popup before it becomes a performance review.`,
+        "",
+        "Key learning: discipline is not built in the moments when you feel strong. It is built when a browser extension catches you acting like a raccoon with Wi-Fi.",
+        "",
+        "Grateful for systems that turn private nonsense into public operational excellence.",
+        "",
+        `#PostMortem #Ownership #ContinuousImprovement ${context.hashtag} #GrandmaAsAService`,
+      ],
+    ];
+
+    return templates[templateIndex].join("\n");
   }
 
   function triggerConsequence() {

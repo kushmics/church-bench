@@ -12,7 +12,7 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 2. Visit `https://goose.com`, `https://example.com/?churchbench=1`, or any URL containing `church-bench-demo`.
 3. The page is replaced by the Church Bench overlay with a grandma warning video.
 4. Type a 50-word apology before the 60-second timer ends.
-5. If you fail, Chrome opens LinkedIn with a prewritten confession draft.
+5. If you fail, Chrome opens LinkedIn with a silly guilt-post draft that changes based on the type of website visited.
 
 ## Install for demo
 
@@ -28,7 +28,7 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 church-bench/
 ├── manifest.json      # Chrome MV3 config
 ├── background.js      # URL detection + script/CSS injection
-├── content.js         # Grandma popup overlay, timer, essay, LinkedIn draft redirect
+├── content.js         # Grandma popup overlay, timer, essay, dynamic LinkedIn guilt-post redirect
 ├── styles.css         # Full-screen panic UI
 ├── assets/
 │   ├── grandmapopup.mp4
@@ -41,7 +41,7 @@ church-bench/
 
 - Demo triggers only. No real adult-site blacklist is shipped.
 - No credentials, cookies, browsing history, or user data are collected.
-- No automatic LinkedIn posting; only a draft URL is opened.
+- No automatic LinkedIn posting; only a website-specific guilt-post draft URL is opened.
 - Overlay is skipped on Chrome internal pages and LinkedIn itself.
 
 ## Hackathon pitch

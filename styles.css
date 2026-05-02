@@ -12,13 +12,16 @@
   display: grid;
   place-items: center;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 18px;
   color: #fff7ed;
   background:
-    radial-gradient(circle at top left, rgba(249, 115, 22, 0.35), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(220, 38, 38, 0.34), transparent 32%),
-    #111827;
+    repeating-linear-gradient(45deg, rgba(250, 204, 21, 0.16) 0 18px, transparent 18px 36px),
+    radial-gradient(circle at 50% 18%, rgba(239, 68, 68, 0.6), transparent 28%),
+    radial-gradient(circle at top left, rgba(249, 115, 22, 0.55), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(220, 38, 38, 0.55), transparent 32%),
+    #050505;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  animation: cb-alarm-bg 0.9s steps(2, end) infinite;
 }
 
 #church-bench-overlay * {
@@ -26,64 +29,74 @@
 }
 
 .cb-card {
-  width: min(720px, 100%);
-  padding: 28px 32px;
-  border: 3px solid #f97316;
-  border-radius: 22px;
-  background: rgba(17, 24, 39, 0.94);
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.65), 0 0 32px rgba(249, 115, 22, 0.28);
+  width: min(980px, 100%);
+  max-height: calc(100vh - 36px);
+  overflow: hidden;
+  padding: 18px 28px 20px;
+  border: 6px solid #facc15;
+  border-radius: 26px;
+  background: rgba(5, 5, 5, 0.96);
+  box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.8), 0 24px 100px rgba(0, 0, 0, 0.75), 0 0 70px rgba(239, 68, 68, 0.7);
   text-align: center;
+  animation: cb-card-pulse 0.7s ease-in-out infinite alternate;
 }
 
 .cb-badge {
   display: inline-flex;
-  margin-bottom: 12px;
-  padding: 6px 12px;
+  margin-bottom: 10px;
+  padding: 8px 18px;
   border-radius: 999px;
-  color: #111827;
-  background: #facc15;
+  color: #fff;
+  background: #dc2626;
   font-weight: 900;
-  letter-spacing: 0.08em;
-  font-size: 12px;
+  letter-spacing: 0.12em;
+  font-size: 14px;
+  box-shadow: 0 0 26px rgba(239, 68, 68, 0.95);
+  animation: cb-siren 0.55s steps(2, end) infinite;
 }
 
 .cb-grandma-video {
   display: block;
-  width: min(280px, 80vw);
-  max-height: 170px;
-  margin: 0 auto 12px;
-  border: 3px solid #facc15;
-  border-radius: 18px;
+  width: min(760px, 92vw);
+  height: clamp(250px, 42vh, 470px);
+  margin: 0 auto 14px;
+  border: 8px solid #facc15;
+  border-radius: 24px;
   object-fit: cover;
+  object-position: center 30%;
   background: #000;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(250, 204, 21, 0.22);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.7), 0 0 55px rgba(250, 204, 21, 0.85), 0 0 0 5px rgba(220, 38, 38, 0.9);
 }
 
 #church-bench-overlay h1 {
-  margin: 12px 0 8px;
+  margin: 8px 0 6px;
   color: #fff7ed;
-  font-size: clamp(24px, 3.5vw, 44px);
-  line-height: 1;
-  letter-spacing: -0.05em;
+  font-size: clamp(30px, 4.8vw, 60px);
+  line-height: 0.92;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(239, 68, 68, 0.85), 0 4px 0 #7f1d1d;
 }
 
 .cb-subtitle {
-  max-width: 580px;
-  margin: 0 auto 18px;
-  color: #fed7aa;
-  font-size: clamp(14px, 1.4vw, 17px);
-  line-height: 1.45;
+  max-width: 760px;
+  margin: 0 auto 12px;
+  color: #fef08a;
+  font-size: clamp(15px, 1.6vw, 20px);
+  font-weight: 800;
+  line-height: 1.28;
 }
 
 .cb-timer-wrap {
   display: grid;
-  gap: 4px;
-  width: min(340px, 100%);
-  margin: 0 auto 18px;
-  padding: 14px;
-  border: 2px solid rgba(248, 113, 113, 0.55);
-  border-radius: 14px;
-  background: rgba(127, 29, 29, 0.36);
+  gap: 3px;
+  width: min(440px, 100%);
+  margin: 0 auto 12px;
+  padding: 12px;
+  border: 4px solid #ef4444;
+  border-radius: 18px;
+  background: repeating-linear-gradient(135deg, rgba(127, 29, 29, 0.86) 0 16px, rgba(69, 10, 10, 0.86) 16px 32px);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.55), 0 0 32px rgba(239, 68, 68, 0.65);
 }
 
 .cb-label,
@@ -91,31 +104,31 @@
   color: #fdba74;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-size: 12px;
 }
 
 #church-bench-timer {
-  color: #fef2f2;
+  color: #fff;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(40px, 6vw, 72px);
-  line-height: 0.95;
-  text-shadow: 0 0 16px rgba(248, 113, 113, 0.75);
+  font-size: clamp(58px, 8vw, 104px);
+  line-height: 0.85;
+  text-shadow: 0 0 26px rgba(248, 113, 113, 1), 0 5px 0 #7f1d1d;
 }
 
 #church-bench-apology {
   display: block;
   width: 100%;
-  min-height: 120px;
-  margin-top: 8px;
-  padding: 14px 16px;
+  min-height: 100px;
+  margin-top: 7px;
+  padding: 12px 14px;
   resize: none;
-  border: 2px solid #fb923c;
+  border: 4px solid #fb923c;
   border-radius: 12px;
   outline: none;
   color: #111827;
   background: #fff7ed;
-  font: 15px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font: 16px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 #church-bench-apology:focus {
@@ -150,6 +163,21 @@
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.65), 0 0 32px rgba(34, 197, 94, 0.32);
 }
 
+@keyframes cb-alarm-bg {
+  0%, 100% { filter: saturate(1.2) brightness(1); }
+  50% { filter: saturate(1.8) brightness(1.18); }
+}
+
+@keyframes cb-card-pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.012); }
+}
+
+@keyframes cb-siren {
+  0%, 100% { background: #dc2626; color: #fff; }
+  50% { background: #facc15; color: #111827; }
+}
+
 @keyframes cb-shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-3px); }
@@ -167,7 +195,12 @@
   }
 
   .cb-card {
-    padding: 20px;
+    padding: 14px;
+  }
+
+  .cb-grandma-video {
+    width: 100%;
+    height: clamp(220px, 38vh, 360px);
   }
 
   .cb-progress-row {
