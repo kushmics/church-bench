@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Church Bench",
+  "version": "1.0.0",
+  "description": "A hackathon browser blocker that makes bad browsing choices face LinkedIn-grade consequences.",
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Church Bench"
+  }
+}

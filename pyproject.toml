@@ -1,9 +1,0 @@
-[project]
-name = "church-bench"
-version = "0.1.0"
-description = "A silly TUI hackathon project."
-readme = "README.md"
-requires-python = ">=3.10"
-
-[project.scripts]
-church-bench = "church_bench.main:main"
