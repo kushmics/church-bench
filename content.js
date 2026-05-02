@@ -26,7 +26,7 @@
       <div class="cb-badge">⛪ LIVE MORAL INCIDENT REPORT</div>
       <div class="cb-layout">
         <div class="cb-grandma-frame">
-          <video class="cb-grandma-video" autoplay loop muted playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
+          <video class="cb-grandma-video" autoplay loop playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
             <source src="${grandmaVideoUrl}" type="video/mp4">
           </video>
         </div>
@@ -58,16 +58,49 @@
   const wordCountDisplay = document.getElementById("church-bench-word-count");
   const warningDisplay = document.getElementById("church-bench-warning");
   const grandmaVideo = overlay.querySelector(".cb-grandma-video");
+  let grandmaAudioContext;
+
+  function boostGrandmaAudio() {
+    if (!grandmaVideo || grandmaAudioContext) return;
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    grandmaAudioContext = new AudioContextClass();
+    const source = grandmaAudioContext.createMediaElementSource(grandmaVideo);
+    const gain = grandmaAudioContext.createGain();
+    gain.gain.value = 4;
+    source.connect(gain);
+    gain.connect(grandmaAudioContext.destination);
+  }
+
+  function playGrandmaAtMaxVolume() {
+    if (!grandmaVideo) return Promise.resolve();
+
+    grandmaVideo.muted = false;
+    grandmaVideo.volume = 1;
+    boostGrandmaAudio();
+
+    if (grandmaAudioContext?.state === "suspended") {
+      return grandmaAudioContext.resume().then(() => grandmaVideo.play());
+    }
+
+    return grandmaVideo.play();
+  }
 
   if (grandmaVideo) {
-    grandmaVideo.muted = true;
     grandmaVideo.load();
-    grandmaVideo.play().catch(() => {
-      const fallbackImage = document.createElement("img");
-      fallbackImage.className = "cb-grandma-video";
-      fallbackImage.src = grandmaPosterUrl;
-      fallbackImage.alt = "Grandma popup warning";
-      grandmaVideo.replaceWith(fallbackImage);
+    playGrandmaAtMaxVolume().catch(() => {
+      const startSoundButton = document.createElement("button");
+      startSoundButton.className = "cb-sound-button";
+      startSoundButton.type = "button";
+      startSoundButton.textContent = "🔊 ENABLE GRANDMA MAX VOLUME";
+      startSoundButton.addEventListener("click", () => {
+        playGrandmaAtMaxVolume().then(() => startSoundButton.remove()).catch(() => {
+          startSoundButton.textContent = "🔊 CLICK AGAIN, GRANDMA IS BUFFERING";
+        });
+      });
+      overlay.querySelector(".cb-grandma-frame")?.appendChild(startSoundButton);
     });
   }
 
