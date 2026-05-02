@@ -270,7 +270,7 @@ async function init() {
       };
     }
 
-    if (/porn|xvideos|rule34|hentai|xxx|adult/.test(host)) {
+    if (/porn|xxx|adult|nsfw/.test(host)) {
       return {
         sin: "navigating into a deeply non-core solo research vertical",
         metric: "my dopamine compliance pipeline failed its quarterly audit",

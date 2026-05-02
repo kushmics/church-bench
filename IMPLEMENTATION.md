@@ -32,9 +32,9 @@ The repo was cleaned from an earlier Python package scaffold into a direct Chrom
 - `manifest.json`
   - Manifest V3 declaration.
   - Permissions: `tabs`, `scripting`, `storage`.
-  - Host permission: `<all_urls>` so the demo can inject on the configured trigger pages.
+  - Host permissions are limited to the same safe demo trigger pages.
   - Content-script matches for demo domains and the local `goose-test.html` page.
-  - Declares grandma video, audio, and poster as web-accessible resources.
+  - Declares grandma video, audio, and poster as web-accessible resources so the content script can render packaged media.
 
 - `background.js`
   - Watches completed tab updates.
@@ -143,7 +143,7 @@ Chrome usually blocks autoplay with sound. Church Bench uses a split-media appro
 
 ## Manual demo checklist
 
-After loading or reloading the unpacked extension:
+After loading or reloading the unpacked extension, enable **Allow access to file URLs** on the extension details page if testing the local file trigger.
 
 1. Open `goose-test.html` from the repo root.
 2. Confirm the page is replaced by the Church Bench overlay.
@@ -176,13 +176,3 @@ for file in assets/grandmapopup.mp4 assets/grandmapopup-audio.m4a; do
   ffprobe -v error -show_entries stream=index,codec_type,codec_name,width,height,channels -of compact "$file"
 done
 ```
-
-## Backup branch
-
-A more polished alternate UI was saved locally on:
-
-```text
-backup/premium-cancer-ui-20260502-150918
-```
-
-The final `main` submission intentionally keeps the louder/crazier version.

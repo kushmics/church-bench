@@ -30,8 +30,9 @@ It does **not** post automatically. It only opens LinkedIn with a prefilled draf
 2. Enable **Developer mode**.
 3. Click **Load unpacked**.
 4. Select this repo folder: `church-bench/`.
-5. Reload the extension after any changes to `manifest.json` or files under `assets/`.
-6. Open `goose-test.html` from the repo root, or visit one of the hosted demo trigger URLs above.
+5. If testing `goose-test.html`, open the extension details page and enable **Allow access to file URLs**.
+6. Reload the extension after any changes to `manifest.json` or files under `assets/`.
+7. Open `goose-test.html` from the repo root, or visit one of the hosted demo trigger URLs above.
 
 ## Files
 
@@ -53,6 +54,7 @@ church-bench/
 ## Safety defaults
 
 - Demo triggers only. No real browsing blacklist is shipped.
+- Host permissions are limited to the demo trigger pages listed above; the extension does not request access to every website.
 - No credentials, cookies, or page content are collected.
 - No browsing history is uploaded or transmitted.
 - The only persisted state is a local per-hostname incident counter stored under `churchBenchNaughtyAccessCounts` in `chrome.storage.local`.
