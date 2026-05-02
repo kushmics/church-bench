@@ -94,54 +94,47 @@
   function startGrandmaAudio() {
     if (grandmaAudioStarted) return Promise.resolve();
 
-    grandmaAudioStarted = true;
     grandmaAudio.currentTime = grandmaVideo?.currentTime || 0;
-    boostGrandmaAudio();
+    grandmaAudio.volume = 1;
 
-    const resumeAudio = grandmaAudioContext?.state === "suspended"
-      ? grandmaAudioContext.resume()
-      : Promise.resolve();
+    return grandmaAudio.play().then(() => {
+      grandmaAudioStarted = true;
+      boostGrandmaAudio();
 
-    return resumeAudio.then(() => grandmaAudio.play()).catch((error) => {
+      if (grandmaAudioContext?.state === "suspended") {
+        return grandmaAudioContext.resume().catch(() => {});
+      }
+
+      return undefined;
+    }).catch((error) => {
       grandmaAudioStarted = false;
       throw error;
     });
   }
 
-  function addSoundButton() {
-    const frame = overlay.querySelector(".cb-grandma-frame");
-    if (!frame || frame.querySelector(".cb-sound-button")) return;
+  function armAudioOnGesturesUntilItWorks() {
+    const gestureEvents = ["pointerdown", "mousedown", "touchstart", "keydown", "input"];
 
-    const startSoundButton = document.createElement("button");
-    startSoundButton.className = "cb-sound-button";
-    startSoundButton.type = "button";
-    startSoundButton.textContent = "🔊 CLICK FOR GRANDMA MAX VOLUME";
-    startSoundButton.addEventListener("click", () => {
-      startGrandmaAudio().then(() => startSoundButton.remove()).catch(() => {
-        startSoundButton.textContent = "🔊 CLICK AGAIN, CHROME BLOCKED GRANDMA";
-      });
-    });
-    frame.appendChild(startSoundButton);
-  }
-
-  function armAudioOnFirstGesture() {
     const startFromGesture = () => {
-      startGrandmaAudio()
-        .then(() => overlay.querySelector(".cb-sound-button")?.remove())
-        .catch(addSoundButton);
+      startGrandmaAudio().then(() => {
+        gestureEvents.forEach((eventName) => {
+          document.removeEventListener(eventName, startFromGesture, true);
+        });
+      }).catch(() => {});
     };
 
-    ["pointerdown", "keydown", "input"].forEach((eventName) => {
-      overlay.addEventListener(eventName, startFromGesture, { once: true, capture: true });
+    gestureEvents.forEach((eventName) => {
+      document.addEventListener(eventName, startFromGesture, true);
     });
   }
 
   playGrandmaVideoMuted();
   grandmaVideo?.addEventListener("click", () => {
     grandmaVideo.play().catch(() => {});
+    startGrandmaAudio().catch(() => {});
   });
-  addSoundButton();
-  armAudioOnFirstGesture();
+  startGrandmaAudio().catch(() => {});
+  armAudioOnGesturesUntilItWorks();
 
   apologyBox.focus();
 
