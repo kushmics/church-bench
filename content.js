@@ -1,9 +1,9 @@
-(() => {
+function init() {
   if (window.__churchBenchActive) return;
   window.__churchBenchActive = true;
 
   const REQUIRED_WORDS = 50;
-  const TOTAL_SECONDS = 60;
+  const TOTAL_SECONDS = 120; // Changed to 120 for 2 minutes
   const DUPLICATE_WORD_PENALTY_SECONDS = 5;
 
   let secondsLeft = TOTAL_SECONDS;
@@ -76,7 +76,7 @@
   function buildLinkedInDraft() {
     const currentHost = window.location.hostname || "a suspicious website";
     return [
-      "I’m proud to share a small but meaningful personal milestone today.",
+      "I'm proud to share a small but meaningful personal milestone today.",
       "",
       `While navigating to ${currentHost}, I was challenged by Church Bench to pause, reflect, and recommit to the kind of digital discipline that compounds into long-term excellence.`,
       "",
@@ -157,4 +157,10 @@
   });
 
   updateTimer();
-})();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
