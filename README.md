@@ -2,18 +2,27 @@
 
 **LinkedIn-powered shameware for bad browsing decisions.**
 
-Church Bench is a hackathon Chrome extension that turns a blocked page into a full-screen public repentance ritual: grandma popup video, timer, apology essay, and a LinkedIn share draft if the user refuses to repent.
+Church Bench is a hackathon Chrome extension that turns a blocked demo page into a full-screen public repentance ritual: a screaming grandma popup video, a 90-second apology timer, escalating word-count requirements, and a LinkedIn guilt-post draft if the user refuses to repent.
 
-It does **not** post automatically. It opens a LinkedIn draft/share URL so the demo stays funny instead of malware.
+It does **not** post automatically. It only opens LinkedIn with a prefilled draft/share URL, so the demo stays funny instead of becoming malware.
 
-## Demo flow
+## Final demo flow
 
 1. Load the extension in Chrome.
-2. Visit `https://goose.com`, `https://xvideo.com`, `https://banana.com`, or the local `goose-test.html` file.
-3. The page is replaced by the Church Bench overlay with a grandma warning video.
-4. Type the required apology before the 90-second timer ends. Grandma starts at 50 words, then adds 25 words for each repeat incident on the same naughty site, capped at 200 words.
-5. If you succeed, Grandma is muted and a green “Apology accepted” celebration screen appears.
-6. If you fail, Chrome opens LinkedIn with a silly guilt-post draft that changes based on the type of website visited.
+2. Visit one of the safe demo trigger pages:
+   - `https://goose.com`
+   - `https://fuq.com`
+   - `https://banana.com`
+   - `https://cornhub.website`
+   - `https://cornhub.com`
+   - local test page: `file:///Users/ethankok/Projects/church-bench/goose-test.html`
+3. Church Bench replaces the page with a full-screen grandma accountability overlay.
+4. Grandma appears in a portrait video frame. The video autoplays muted where Chrome allows it; the separate grandma audio starts immediately if allowed, or on the first user gesture.
+5. The user has 90 seconds to type the required apology.
+6. The first incident for a hostname requires 50 words. Repeat incidents on the same hostname add 25 words each, capped at 200 words.
+7. Paste is blocked and penalized by 5 seconds. Consecutive duplicate words are removed and also penalized by 5 seconds.
+8. If the user reaches the required word count, grandma is muted/stopped and the green forgiveness screen appears.
+9. If the timer reaches zero, Chrome redirects to LinkedIn with a funny guilt-post draft tailored to the category of site visited.
 
 ## Install for demo
 
@@ -21,31 +30,59 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 2. Enable **Developer mode**.
 3. Click **Load unpacked**.
 4. Select this repo folder: `church-bench/`.
-5. Visit `file:///Users/ethankok/Projects/church-bench/goose-test.html`.
+5. Reload the extension after any changes to `manifest.json` or files under `assets/`.
+6. Visit the local test page:
+
+```text
+file:///Users/ethankok/Projects/church-bench/goose-test.html
+```
 
 ## Files
 
 ```text
 church-bench/
-├── manifest.json      # Chrome MV3 config
-├── background.js      # URL detection + script/CSS injection
-├── content.js         # Grandma popup overlay, escalating essay, timer, dynamic LinkedIn guilt-post redirect
-├── styles.css         # Full-screen panic UI
+├── manifest.json      # Chrome MV3 config, permissions, content-script matches, web-accessible media assets
+├── background.js      # Safe trigger detection + CSS/JS injection fallback for completed tab updates
+├── content.js         # Overlay DOM, grandma media playback, timer, escalating apology logic, validation, LinkedIn draft redirect
+├── styles.css         # Full-screen panic UI and calming forgiveness screen
 ├── assets/
-│   ├── grandmapopup.mp4
-│   ├── grandmapopup-audio.m4a
-│   └── grandmapopup-poster.jpg
-├── IMPLEMENTATION.md  # Build notes and demo constraints
+│   ├── grandmapopup.mp4        # Portrait grandma popup video
+│   ├── grandmapopup-audio.m4a  # Separate boosted audio for Chrome autoplay fallback
+│   └── grandmapopup-poster.jpg # Poster/fallback image
+├── goose-test.html    # Local trigger page for repeatable demos
+├── IMPLEMENTATION.md  # Technical notes, architecture, verification checklist
 └── README.md
 ```
 
 ## Safety defaults
 
-- Demo triggers only. No real adult-site blacklist is shipped.
-- No credentials, cookies, or browsing history are collected. The extension stores only per-site naughty-visit counts locally so repeat offenses require longer apologies.
-- No automatic LinkedIn posting; only a website-specific guilt-post draft URL is opened.
-- Overlay is skipped on Chrome internal pages and LinkedIn itself.
+- Demo triggers only. No real browsing blacklist is shipped.
+- No credentials, cookies, or page content are collected.
+- No browsing history is uploaded or transmitted.
+- The only persisted state is a local per-hostname incident counter stored under `churchBenchNaughtyAccessCounts` in `chrome.storage.local`.
+- No automatic LinkedIn posting occurs; Church Bench only opens a draft/share URL.
+- The extension skips LinkedIn itself to avoid redirect loops.
+- Chrome internal pages are not injectable by extension content scripts.
+
+## Verification
+
+Run from the repo root:
+
+```bash
+node --check background.js
+node --check content.js
+python3 -m json.tool manifest.json >/dev/null
+git diff --check
+```
+
+Then reload the unpacked extension and manually test:
+
+```text
+file:///Users/ethankok/Projects/church-bench/goose-test.html
+```
+
+Confirm that the timer, word count, paste penalty, duplicate-word penalty, forgiveness screen, grandma media, and LinkedIn timeout redirect all still work.
 
 ## Hackathon pitch
 
-Most blockers are boring. Church Bench weaponizes social accountability: it does not just block the page, it makes a grandma pop up and force the user to bargain with their future professional self.
+Most blockers are boring. Church Bench weaponizes social accountability: it does not just block the page, it makes a grandma pop up, forces a repentance essay, and threatens your LinkedIn network with radical professional transparency.

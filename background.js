@@ -1,4 +1,11 @@
-const DEMO_TRIGGERS = ["cornhub.website", "fuq.com", "banana.com", "goose-test.html"];
+const DEMO_TRIGGERS = [
+  "banana.com",
+  "cornhub.com",
+  "cornhub.website",
+  "fuq.com",
+  "goose.com",
+  "goose-test.html",
+];
 const injectedTabs = new Set();
 
 function canInject(url) {
@@ -11,9 +18,8 @@ function canInject(url) {
     return false;
   }
 
-  // FIXED: Added 'file:' to the allowed protocols
   if (!["http:", "https:", "file:"].includes(parsed.protocol)) return false;
-  
+
   if (parsed.hostname.includes("linkedin.com")) return false;
 
   const searchableUrl = url.toLowerCase();
