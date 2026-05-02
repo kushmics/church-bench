@@ -2,7 +2,6 @@ const DEMO_TRIGGERS = [
   "banana.com",
   "cornhub.com",
   "cornhub.website",
-  "fuq.com",
   "goose.com",
   "goose-test.html",
 ];

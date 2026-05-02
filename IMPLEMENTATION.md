@@ -76,7 +76,6 @@ Configured content-script trigger patterns in `manifest.json`:
 
 ```text
 *://*.goose.com/*
-*://*.fuq.com/*
 *://*.banana.com/*
 *://*.cornhub.website/*
 *://*.cornhub.com/*

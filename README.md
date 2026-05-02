@@ -11,7 +11,6 @@ It does **not** post automatically. It only opens LinkedIn with a prefilled draf
 1. Load the extension in Chrome.
 2. Visit one of the safe demo trigger pages:
    - `https://goose.com`
-   - `https://fuq.com`
    - `https://banana.com`
    - `https://cornhub.website`
    - `https://cornhub.com`
