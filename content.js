@@ -1,9 +1,9 @@
-(() => {
+function init() {
   if (window.__churchBenchActive) return;
   window.__churchBenchActive = true;
 
   const REQUIRED_WORDS = 50;
-  const TOTAL_SECONDS = 60;
+  const TOTAL_SECONDS = 120; // Changed to 120 for 2 minutes
   const DUPLICATE_WORD_PENALTY_SECONDS = 5;
 
   let secondsLeft = TOTAL_SECONDS;
@@ -38,7 +38,7 @@
 
           <div class="cb-timer-wrap">
             <span class="cb-label">Time before corporate transparency post</span>
-            <strong id="church-bench-timer">01:00</strong>
+            <strong id="church-bench-timer">02:00</strong>
           </div>
 
           <label for="church-bench-apology">Essay of repentance</label>
@@ -345,4 +345,10 @@
   });
 
   updateTimer();
-})();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}

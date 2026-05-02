@@ -1,4 +1,4 @@
-const DEMO_TRIGGERS = ["goose.com", "church-bench-demo", "churchbench=1"];
+const DEMO_TRIGGERS = ["goose.com", "xvideo.com", "banana.com", "goose-test.html"];
 const injectedTabs = new Set();
 
 function canInject(url) {
@@ -11,7 +11,9 @@ function canInject(url) {
     return false;
   }
 
-  if (!["http:", "https:"].includes(parsed.protocol)) return false;
+  // FIXED: Added 'file:' to the allowed protocols
+  if (!["http:", "https:", "file:"].includes(parsed.protocol)) return false;
+  
   if (parsed.hostname.includes("linkedin.com")) return false;
 
   const searchableUrl = url.toLowerCase();
