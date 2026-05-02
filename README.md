@@ -9,9 +9,9 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 ## Demo flow
 
 1. Load the extension in Chrome.
-2. Visit `https://goose.com`, `https://example.com/?churchbench=1`, or any URL containing `church-bench-demo`.
+2. Visit `https://goose.com`, `https://xvideo.com`, `https://banana.com`, or the local `goose-test.html` file.
 3. The page is replaced by the Church Bench overlay with a grandma warning video.
-4. Type a 50-word apology before the 60-second timer ends.
+4. Type the required apology before the 90-second timer ends. Grandma starts at 50 words, then adds 25 words for each repeat incident on the same naughty site, capped at 200 words.
 5. If you fail, Chrome opens LinkedIn with a silly guilt-post draft that changes based on the type of website visited.
 
 ## Install for demo
@@ -20,7 +20,7 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 2. Enable **Developer mode**.
 3. Click **Load unpacked**.
 4. Select this repo folder: `church-bench/`.
-5. Visit `https://example.com/?churchbench=1`.
+5. Visit `file:///Users/ethankok/Projects/church-bench/goose-test.html`.
 
 ## Files
 
@@ -28,10 +28,11 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 church-bench/
 ├── manifest.json      # Chrome MV3 config
 ├── background.js      # URL detection + script/CSS injection
-├── content.js         # Grandma popup overlay, timer, essay, dynamic LinkedIn guilt-post redirect
+├── content.js         # Grandma popup overlay, escalating essay, timer, dynamic LinkedIn guilt-post redirect
 ├── styles.css         # Full-screen panic UI
 ├── assets/
 │   ├── grandmapopup.mp4
+│   ├── grandmapopup-audio.m4a
 │   └── grandmapopup-poster.jpg
 ├── IMPLEMENTATION.md  # Build notes and demo constraints
 └── README.md
@@ -40,7 +41,7 @@ church-bench/
 ## Safety defaults
 
 - Demo triggers only. No real adult-site blacklist is shipped.
-- No credentials, cookies, browsing history, or user data are collected.
+- No credentials, cookies, or browsing history are collected. The extension stores only per-site naughty-visit counts locally so repeat offenses require longer apologies.
 - No automatic LinkedIn posting; only a website-specific guilt-post draft URL is opened.
 - Overlay is skipped on Chrome internal pages and LinkedIn itself.
 

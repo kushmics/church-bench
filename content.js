@@ -1,10 +1,17 @@
-function init() {
+async function init() {
   if (window.__churchBenchActive) return;
   window.__churchBenchActive = true;
 
-  const REQUIRED_WORDS = 50;
+  const BASE_REQUIRED_WORDS = 50;
+  const WORDS_PER_REPEAT_OFFENSE = 25;
+  const MAX_REQUIRED_WORDS = 200;
   const TOTAL_SECONDS = 90; // 90-second repentance timer
   const DUPLICATE_WORD_PENALTY_SECONDS = 5;
+  const ACCESS_COUNTS_KEY = "churchBenchNaughtyAccessCounts";
+
+  const currentHost = window.location.hostname || "local-test";
+  const offenseCount = await recordNaughtyVisit(currentHost);
+  const requiredWords = getRequiredWords(offenseCount);
 
   let secondsLeft = TOTAL_SECONDS;
   let countdownId;
@@ -34,7 +41,7 @@ function init() {
 
         <div class="cb-panel">
           <h1>Young person, your LinkedIn network is watching.</h1>
-          <p class="cb-subtitle">You have entered a naughty URL. Repent with a sincere apology before the timer ends.</p>
+          <p class="cb-subtitle">You have entered a naughty URL. This is incident #${offenseCount} for ${currentHost}, so Grandma now requires ${requiredWords} words before the timer ends.</p>
 
           <div class="cb-timer-wrap">
             <span class="cb-label">Time before corporate transparency post</span>
@@ -45,7 +52,7 @@ function init() {
           <textarea id="church-bench-apology" autocomplete="off" spellcheck="true" placeholder="I sincerely regret attempting to browse unproductively during a hackathon demo..."></textarea>
 
           <div class="cb-progress-row">
-            <span id="church-bench-word-count">Words: 0 / ${REQUIRED_WORDS}</span>
+            <span id="church-bench-word-count">Words: 0 / ${requiredWords}</span>
             <span id="church-bench-warning">No copy-paste apologies. Grandma can tell.</span>
           </div>
         </div>
@@ -144,6 +151,50 @@ function init() {
       .split(/\s+/)
       .map((word) => word.replace(/^\W+|\W+$/g, ""))
       .filter(Boolean);
+  }
+
+  function getRequiredWords(count) {
+    return Math.min(
+      MAX_REQUIRED_WORDS,
+      BASE_REQUIRED_WORDS + Math.max(0, count - 1) * WORDS_PER_REPEAT_OFFENSE,
+    );
+  }
+
+  function getStoredCounts() {
+    return new Promise((resolve) => {
+      if (typeof chrome === "undefined" || !chrome.storage?.local) {
+        try {
+          resolve(JSON.parse(localStorage.getItem(ACCESS_COUNTS_KEY)) || {});
+        } catch {
+          resolve({});
+        }
+        return;
+      }
+
+      chrome.storage.local.get([ACCESS_COUNTS_KEY], (result) => {
+        resolve(result[ACCESS_COUNTS_KEY] || {});
+      });
+    });
+  }
+
+  function setStoredCounts(counts) {
+    return new Promise((resolve) => {
+      if (typeof chrome === "undefined" || !chrome.storage?.local) {
+        localStorage.setItem(ACCESS_COUNTS_KEY, JSON.stringify(counts));
+        resolve();
+        return;
+      }
+
+      chrome.storage.local.set({ [ACCESS_COUNTS_KEY]: counts }, resolve);
+    });
+  }
+
+  async function recordNaughtyVisit(hostname) {
+    const counts = await getStoredCounts();
+    const nextCount = (counts[hostname] || 0) + 1;
+    counts[hostname] = nextCount;
+    await setStoredCounts(counts);
+    return nextCount;
   }
 
   function formatTime(totalSeconds) {
@@ -330,9 +381,9 @@ function init() {
       showWarning(`Repeated word detected. Minus ${DUPLICATE_WORD_PENALTY_SECONDS} seconds.`);
     }
 
-    wordCountDisplay.textContent = `Words: ${words.length} / ${REQUIRED_WORDS}`;
+    wordCountDisplay.textContent = `Words: ${words.length} / ${requiredWords}`;
 
-    if (words.length >= REQUIRED_WORDS) {
+    if (words.length >= requiredWords) {
       grantForgiveness();
     }
   });

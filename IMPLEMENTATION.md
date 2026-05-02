@@ -14,20 +14,36 @@ The repo was cleaned from a Python package scaffold into a demo-ready Chrome ext
 
 ## Architecture
 
-- `manifest.json`: Manifest V3 declaration with `tabs`, `scripting`, host permissions, and web-accessible grandma video assets.
+- `manifest.json`: Manifest V3 declaration with `tabs`, `scripting`, `storage`, host permissions, and web-accessible grandma video/audio assets.
 - `background.js`: watches completed tab updates, checks safe demo triggers, injects `styles.css` and `content.js` once per matching tab.
-- `content.js`: builds the grandma popup overlay, runs the timer, validates apology word count, classifies the visited website, and opens a dynamic LinkedIn guilt-post draft on timeout.
+- `content.js`: builds the grandma popup overlay, records per-site naughty-visit counts in local extension storage, escalates the apology length by repeat offense, runs the timer, validates apology word count, classifies the visited website, and opens a dynamic LinkedIn guilt-post draft on timeout.
 - `styles.css`: high-contrast full-screen interface for projector-friendly demos, including the grandma video frame.
 - `assets/grandmapopup.mp4`: H.264 MP4 grandma popup video.
+- `assets/grandmapopup-audio.m4a`: separate boosted grandma audio used because Chrome blocks guaranteed unmuted video autoplay.
 - `assets/grandmapopup-poster.jpg`: poster/fallback image used before playback starts or if autoplay fails.
+
+## Repeat-offense apology scaling
+
+The first incident on a hostname requires 50 words. Each later incident on the same hostname adds 25 words, capped at 200 words:
+
+```text
+1st visit: 50 words
+2nd visit: 75 words
+3rd visit: 100 words
+...
+7th+ visit: 200 words
+```
+
+Counts are stored in `chrome.storage.local` under `churchBenchNaughtyAccessCounts`, so the penalty survives page refreshes and browser restarts without sending data anywhere.
 
 ## Demo trigger policy
 
 Current triggers:
 
 - `goose.com`
-- `church-bench-demo`
-- query string containing `churchbench=1`
+- `xvideo.com`
+- `banana.com`
+- `goose-test.html`
 
 This keeps the demo controllable and avoids accidentally targeting real user browsing.
 
@@ -44,5 +60,5 @@ python3 -m json.tool manifest.json >/dev/null
 Then load the repo folder via `chrome://extensions` and visit:
 
 ```text
-https://example.com/?churchbench=1
+file:///Users/ethankok/Projects/church-bench/goose-test.html
 ```
