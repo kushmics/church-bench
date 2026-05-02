@@ -33,7 +33,7 @@
 
         <div class="cb-panel">
           <h1>Young person, your LinkedIn network is watching.</h1>
-          <p class="cb-subtitle">You have entered a spiritually suspicious URL. Repent with a sincere apology before the timer ends.</p>
+          <p class="cb-subtitle">You have entered a naughty URL. Repent with a sincere apology before the timer ends.</p>
 
           <div class="cb-timer-wrap">
             <span class="cb-label">Time before corporate transparency post</span>
@@ -147,7 +147,7 @@
     }
 
     return {
-      sin: "opening a spiritually suspicious non-roadmap tab",
+      sin: "opening a naughty non-roadmap tab",
       metric: "my focus pipeline suffered an avoidable governance incident",
       remedy: "returning to deep work before Grandma escalates to the board",
       hashtag: "#GrowthMindset",
