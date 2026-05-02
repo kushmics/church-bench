@@ -16,7 +16,6 @@ async function init() {
   let secondsLeft = TOTAL_SECONDS;
   let countdownId;
 
-  const originalTitle = document.title;
   document.title = "CHURCH BENCH DISCIPLINARY HEARING";
   document.documentElement.classList.add("church-bench-locked");
   document.body.innerHTML = "";
@@ -69,6 +68,7 @@ async function init() {
   const grandmaAudio = new Audio(grandmaAudioUrl);
   let grandmaAudioContext;
   let grandmaAudioStarted = false;
+  let forgivenessGranted = false;
 
   grandmaAudio.loop = true;
   grandmaAudio.volume = 1;
@@ -133,6 +133,23 @@ async function init() {
     gestureEvents.forEach((eventName) => {
       document.addEventListener(eventName, startFromGesture, true);
     });
+  }
+
+  function stopGrandmaMedia() {
+    if (grandmaVideo) {
+      grandmaVideo.pause();
+      grandmaVideo.muted = true;
+      grandmaVideo.removeAttribute("src");
+      grandmaVideo.load();
+    }
+
+    grandmaAudio.pause();
+    grandmaAudio.currentTime = 0;
+    grandmaAudio.muted = true;
+
+    if (grandmaAudioContext?.state !== "closed") {
+      grandmaAudioContext?.close().catch(() => {});
+    }
   }
 
   playGrandmaVideoMuted();
@@ -338,14 +355,27 @@ async function init() {
   }
 
   function grantForgiveness() {
+    if (forgivenessGranted) return;
+    forgivenessGranted = true;
+
     window.clearInterval(countdownId);
-    document.title = originalTitle;
+    stopGrandmaMedia();
+    document.title = "CHURCH BENCH: FORGIVEN";
+    document.documentElement.classList.remove("church-bench-locked");
     document.body.innerHTML = `
       <main id="church-bench-overlay" class="cb-forgiven">
-        <section class="cb-card">
-          <div class="cb-face" aria-hidden="true">🙏</div>
-          <h1>Grandma is satisfied.</h1>
-          <p class="cb-subtitle">You may return to society. Close this tab and make better choices.</p>
+        <section class="cb-card cb-forgiven-card">
+          <div class="cb-confetti" aria-hidden="true">🎉 ✨ 🙏 ✨ 🎉</div>
+          <div class="cb-face" aria-hidden="true">✅</div>
+          <div class="cb-badge cb-forgiven-badge">GRANDMA HAS LEFT THE CALL</div>
+          <h1>Apology accepted.</h1>
+          <p class="cb-subtitle">Grandma has been muted. Your ${requiredWords}-word repentance essay has been filed under “growth mindset.”</p>
+          <div class="cb-forgiven-stats" aria-label="Repentance stats">
+            <span>Incident #${offenseCount}</span>
+            <span>${requiredWords} words required</span>
+            <span>${formatTime(Math.max(0, secondsLeft))} spared</span>
+          </div>
+          <p class="cb-forgiven-note">You may return to society. Close this tab and make better choices.</p>
         </section>
       </main>
     `;

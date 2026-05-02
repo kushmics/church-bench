@@ -12,7 +12,8 @@ It does **not** post automatically. It opens a LinkedIn draft/share URL so the d
 2. Visit `https://goose.com`, `https://xvideo.com`, `https://banana.com`, or the local `goose-test.html` file.
 3. The page is replaced by the Church Bench overlay with a grandma warning video.
 4. Type the required apology before the 90-second timer ends. Grandma starts at 50 words, then adds 25 words for each repeat incident on the same naughty site, capped at 200 words.
-5. If you fail, Chrome opens LinkedIn with a silly guilt-post draft that changes based on the type of website visited.
+5. If you succeed, Grandma is muted and a green “Apology accepted” celebration screen appears.
+6. If you fail, Chrome opens LinkedIn with a silly guilt-post draft that changes based on the type of website visited.
 
 ## Install for demo
 

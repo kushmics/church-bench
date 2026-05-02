@@ -16,7 +16,7 @@ The repo was cleaned from a Python package scaffold into a demo-ready Chrome ext
 
 - `manifest.json`: Manifest V3 declaration with `tabs`, `scripting`, `storage`, host permissions, and web-accessible grandma video/audio assets.
 - `background.js`: watches completed tab updates, checks safe demo triggers, injects `styles.css` and `content.js` once per matching tab.
-- `content.js`: builds the grandma popup overlay, records per-site naughty-visit counts in local extension storage, escalates the apology length by repeat offense, runs the timer, validates apology word count, classifies the visited website, and opens a dynamic LinkedIn guilt-post draft on timeout.
+- `content.js`: builds the grandma popup overlay, records per-site naughty-visit counts in local extension storage, escalates the apology length by repeat offense, runs the timer, validates apology word count, mutes grandma and shows the success screen on completion, classifies the visited website, and opens a dynamic LinkedIn guilt-post draft on timeout.
 - `styles.css`: high-contrast full-screen interface for projector-friendly demos, including the grandma video frame.
 - `assets/grandmapopup.mp4`: H.264 MP4 grandma popup video.
 - `assets/grandmapopup-audio.m4a`: separate boosted grandma audio used because Chrome blocks guaranteed unmuted video autoplay.
