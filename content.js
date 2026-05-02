@@ -76,13 +76,19 @@
   function buildLinkedInDraft() {
     const currentHost = window.location.hostname || "a suspicious website";
     return [
-      "🚨 A moment of professional transparency. 🚨",
+      "I’m proud to share a small but meaningful personal milestone today.",
       "",
-      `During a hackathon demo, I attempted to visit ${currentHost} and was immediately intercepted by Church Bench.`,
+      `While navigating to ${currentHost}, I was challenged by Church Bench to pause, reflect, and recommit to the kind of digital discipline that compounds into long-term excellence.`,
       "",
-      "This incident revealed a gap in my personal productivity governance framework. I am treating it as a learning opportunity, a stakeholder alignment moment, and a reminder to touch grass before opening new tabs.",
+      "In that moment, I realized productivity is not about never getting distracted. It is about building systems that lovingly but firmly redirect us back to our highest-leverage work.",
       "",
-      "Huge thanks to the Church Bench team for building accountability infrastructure for the modern knowledge worker.",
+      "This experience reminded me that accountability is not a punishment — it is a privilege. Every interruption can become an invitation to grow, realign, and lead myself better.",
+      "",
+      "Grateful for the opportunity to turn a potential lapse in focus into a lesson in ownership, resilience, and intentional browsing.",
+      "",
+      "What systems are you building to keep your future self proud?",
+      "",
+      "#Productivity #Accountability #GrowthMindset #Leadership #PersonalDevelopment",
     ].join("\n");
   }
 
