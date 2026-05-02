@@ -145,7 +145,7 @@ Chrome usually blocks autoplay with sound. Church Bench uses a split-media appro
 
 After loading or reloading the unpacked extension:
 
-1. Open `file:///Users/ethankok/Projects/church-bench/goose-test.html`.
+1. Open `goose-test.html` from the repo root.
 2. Confirm the page is replaced by the Church Bench overlay.
 3. Confirm grandma video is visible and not cropped.
 4. Confirm the timer starts at `01:30` and counts down.
