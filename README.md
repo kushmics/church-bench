@@ -15,7 +15,7 @@ It does **not** post automatically. It only opens LinkedIn with a prefilled draf
    - `https://banana.com`
    - `https://cornhub.website`
    - `https://cornhub.com`
-   - local test page: `file:///Users/ethankok/Projects/church-bench/goose-test.html`
+   - local test page: open `goose-test.html` from the repo root
 3. Church Bench replaces the page with a full-screen grandma accountability overlay.
 4. Grandma appears in a portrait video frame. The video autoplays muted where Chrome allows it; the separate grandma audio starts immediately if allowed, or on the first user gesture.
 5. The user has 90 seconds to type the required apology.
@@ -31,11 +31,7 @@ It does **not** post automatically. It only opens LinkedIn with a prefilled draf
 3. Click **Load unpacked**.
 4. Select this repo folder: `church-bench/`.
 5. Reload the extension after any changes to `manifest.json` or files under `assets/`.
-6. Visit the local test page:
-
-```text
-file:///Users/ethankok/Projects/church-bench/goose-test.html
-```
+6. Open `goose-test.html` from the repo root, or visit one of the hosted demo trigger URLs above.
 
 ## Files
 
@@ -75,11 +71,7 @@ python3 -m json.tool manifest.json >/dev/null
 git diff --check
 ```
 
-Then reload the unpacked extension and manually test:
-
-```text
-file:///Users/ethankok/Projects/church-bench/goose-test.html
-```
+Then reload the unpacked extension and manually test `goose-test.html` from the repo root.
 
 Confirm that the timer, word count, paste penalty, duplicate-word penalty, forgiveness screen, grandma media, and LinkedIn timeout redirect all still work.
 
