@@ -24,23 +24,30 @@
   overlay.innerHTML = `
     <section class="cb-card">
       <div class="cb-badge">⛪ LIVE MORAL INCIDENT REPORT</div>
-      <video class="cb-grandma-video" autoplay loop muted playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
-        <source src="${grandmaVideoUrl}" type="video/mp4">
-      </video>
-      <h1>Young person, your LinkedIn network is watching.</h1>
-      <p class="cb-subtitle">You have entered a spiritually suspicious URL. Repent with a sincere apology before the timer ends.</p>
+      <div class="cb-layout">
+        <div class="cb-grandma-frame">
+          <video class="cb-grandma-video" autoplay loop muted playsinline preload="auto" poster="${grandmaPosterUrl}" aria-label="Grandma popup warning">
+            <source src="${grandmaVideoUrl}" type="video/mp4">
+          </video>
+        </div>
 
-      <div class="cb-timer-wrap">
-        <span class="cb-label">Time before corporate transparency post</span>
-        <strong id="church-bench-timer">01:00</strong>
-      </div>
+        <div class="cb-panel">
+          <h1>Young person, your LinkedIn network is watching.</h1>
+          <p class="cb-subtitle">You have entered a spiritually suspicious URL. Repent with a sincere apology before the timer ends.</p>
 
-      <label for="church-bench-apology">Essay of repentance</label>
-      <textarea id="church-bench-apology" autocomplete="off" spellcheck="true" placeholder="I sincerely regret attempting to browse unproductively during a hackathon demo..."></textarea>
+          <div class="cb-timer-wrap">
+            <span class="cb-label">Time before corporate transparency post</span>
+            <strong id="church-bench-timer">01:00</strong>
+          </div>
 
-      <div class="cb-progress-row">
-        <span id="church-bench-word-count">Words: 0 / ${REQUIRED_WORDS}</span>
-        <span id="church-bench-warning">No copy-paste apologies. Grandma can tell.</span>
+          <label for="church-bench-apology">Essay of repentance</label>
+          <textarea id="church-bench-apology" autocomplete="off" spellcheck="true" placeholder="I sincerely regret attempting to browse unproductively during a hackathon demo..."></textarea>
+
+          <div class="cb-progress-row">
+            <span id="church-bench-word-count">Words: 0 / ${REQUIRED_WORDS}</span>
+            <span id="church-bench-warning">No copy-paste apologies. Grandma can tell.</span>
+          </div>
+        </div>
       </div>
     </section>
   `;
