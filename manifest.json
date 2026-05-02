@@ -11,8 +11,10 @@
     {
       "matches": [
         "*://*.goose.com/*",
-        "*://*.xvideo.com/*",
+        "*://*.fuq.com/*",
         "*://*.banana.com/*",
+        "*://*.cornhub.website/*",
+        "*://*.cornhub.com/*",
         "file:///*goose-test.html*"
       ],
       "js": ["content.js"],

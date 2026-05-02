@@ -1,4 +1,4 @@
-const DEMO_TRIGGERS = ["goose.com", "xvideo.com", "banana.com", "goose-test.html"];
+const DEMO_TRIGGERS = ["cornhub.website", "fuq.com", "banana.com", "goose-test.html"];
 const injectedTabs = new Set();
 
 function canInject(url) {
